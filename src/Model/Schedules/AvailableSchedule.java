@@ -1,4 +1,4 @@
-package Model.Time.Schedules;
+package Model.Schedules;
 
 public class AvailableSchedule {
 }
