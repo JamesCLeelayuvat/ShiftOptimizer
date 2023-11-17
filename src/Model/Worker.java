@@ -1,11 +1,11 @@
 package Model;
 
-public class Worker
+public abstract class Worker
 {
     int workerID;
 
     String[] schedule;
 
     String password;
-    
+
 }

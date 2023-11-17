@@ -1,2 +1,5 @@
-package View;public class SignInScreen {
+package View;
+public class SignInScreen
+{
+
 }
