@@ -1,4 +1,5 @@
 package Model.Time.Schedules;
 
-public class AvailableSchedule {
+public class AvailableSchedule
+{
 }
