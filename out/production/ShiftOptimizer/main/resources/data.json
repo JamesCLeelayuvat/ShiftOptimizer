@@ -1,0 +1,7 @@
+{
+  "workers" : [ {
+    "username" : "test1",
+    "password" : "testpass",
+    "status" : "S"
+  } ]
+}
