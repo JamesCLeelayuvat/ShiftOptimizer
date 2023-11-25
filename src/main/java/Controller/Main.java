@@ -24,6 +24,7 @@ public class Main {
             System.out.println("1. Add Worker");
             System.out.println("2. View Workers");
             System.out.println("3. Exit");
+            System.out.println("4. Clear JSON File");
             System.out.print("Choose an option: ");
 
             int choice = scanner.nextInt();
@@ -50,6 +51,10 @@ public class Main {
                     break;
                 case 3:
                     running = false;
+                    break;
+                case 4:
+                    Jackson.clearJsonFile();
+                    System.out.println("JSON file cleared.");
                     break;
                 default:
                     System.out.println("Invalid option. Please try again.");

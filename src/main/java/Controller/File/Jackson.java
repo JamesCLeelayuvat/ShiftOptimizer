@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import main.java.Controller.Security.BouncyCastle;
 
 
@@ -55,6 +56,8 @@ public class Jackson {
 
     public static void addWorker(String username, String password, String status) {
         //Have to check for duplicate usernames
+
+        // I updated what you wrote here
         JsonNode rootNode = getRootNode();
         ObjectMapper objectMapper = getObjectMapper();
         ObjectWriter objectWriter = getObjectWriter();
@@ -143,7 +146,7 @@ public class Jackson {
 //    }
 
 
-    //Reeces stuff
+    //Reece's stuff
     public static List<Worker> getAllWorkers() {
         try {
             JsonNode rootNode = getRootNode();
@@ -160,4 +163,21 @@ public class Jackson {
         }
         return new ArrayList<>();
     }
+
+    public static void clearJsonFile() {
+        ObjectMapper objectMapper = getObjectMapper();
+        ObjectWriter objectWriter = getObjectWriter();
+
+        // Create a new JSON object with an empty "workers" array
+        ObjectNode rootNode = objectMapper.createObjectNode();
+        rootNode.putArray("workers");
+
+        // Write the new empty structure back to the file
+        try {
+            objectWriter.writeValue(getJsonFile(), rootNode);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }
