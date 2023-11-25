@@ -1,7 +1,7 @@
-package Model.Schedules;
+package main.java.Model.Schedules;
 
 
-import Model.Time.Day;
+import Model.*;
 
 enum DaysOfTheWeek {Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday}
 
