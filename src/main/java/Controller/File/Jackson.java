@@ -1,9 +1,18 @@
 package main.java.Controller.File;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import main.java.Controller.Security.BouncyCastle;
+
+
+
+import java.util.ArrayList;
+import java.util.List;
+import main.java.Model.Staff.Worker;
+
+
 
 import java.io.File;
 import java.lang.reflect.Array;
@@ -49,6 +58,39 @@ public class Jackson {
         JsonNode rootNode = getRootNode();
         ObjectMapper objectMapper = getObjectMapper();
         ObjectWriter objectWriter = getObjectWriter();
+
+        // Check if username already exists
+        boolean usernameExists = false;
+        JsonNode workersNode = rootNode.path("workers");
+        for (JsonNode workerNode : workersNode) {
+            if (workerNode.path("username").asText().equals(username)) {
+                usernameExists = true;
+                break;
+            }
+        }
+
+        // Add new worker only if username is unique
+        if (!usernameExists) {
+            JsonNode newWorker = objectMapper.createObjectNode()
+                    .put("username", username)
+                    .put("password", hashPassword(password))
+                    .put("status", status);
+            ((com.fasterxml.jackson.databind.node.ArrayNode) workersNode).add(newWorker);
+
+            try {
+                objectWriter.writeValue(getJsonFile(), rootNode);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("Username already exists. Please choose a different username.");
+        }
+
+
+
+        /*JsonNode rootNode = getRootNode();
+        ObjectMapper objectMapper = getObjectMapper();
+        ObjectWriter objectWriter = getObjectWriter();
         JsonNode newWorker = objectMapper.createObjectNode().put("username", username).put("password", hashPassword(password)).put("status", status);
         ((com.fasterxml.jackson.databind.node.ArrayNode) rootNode.get("workers")).add(newWorker);
 
@@ -56,7 +98,7 @@ public class Jackson {
             objectWriter.writeValue(getJsonFile(), rootNode);
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     public static void removeWorker(String username) {
@@ -99,4 +141,23 @@ public class Jackson {
 //    public static boolean checkDuplicateUsername(){
 //
 //    }
+
+
+    //Reeces stuff
+    public static List<Worker> getAllWorkers() {
+        try {
+            JsonNode rootNode = getRootNode();
+            ObjectMapper objectMapper = getObjectMapper();
+            // Assuming the workers are stored in an array under the "workers" field
+            if (rootNode != null && rootNode.has("workers")) {
+                return objectMapper.convertValue(
+                        rootNode.get("workers"),
+                        new TypeReference<List<Worker>>() {}
+                );
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
+    }
 }

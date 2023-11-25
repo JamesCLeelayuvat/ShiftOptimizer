@@ -4,10 +4,12 @@ package main.java.Controller;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.util.List;
 import java.util.Scanner;
 
 import main.java.Controller.File.Jackson;
 import main.java.Controller.Security.BouncyCastle;
+import main.java.Model.Staff.Worker;
 
 import java.io.File;
 import java.util.Scanner;
@@ -28,11 +30,23 @@ public class Main {
             switch (choice) {
                 case 1:
                     // Add logic to add a worker
-                    Jackson.addWorker("test1", "pass1", "ST");
-                    BouncyCastle.loginTest("test1", "pass1");
+
+                    System.out.print("Enter username: ");
+                    String username = scanner.next();
+                    System.out.print("Enter password: ");
+                    String password = scanner.next();
+                    System.out.print("Enter status (ST/AD): ");
+                    String status = scanner.next();
+                    Jackson.addWorker(username, password, status);
+
+                    //Jackson.addWorker("test1", "pass1", "ST");
+                    //BouncyCastle.loginTest("test1", "pass1");
                     break;
                 case 2:
-                    // Add logic to view workers
+                    List<Worker> workers = Jackson.getAllWorkers();
+                    for (Worker worker : workers) {
+                        System.out.println(worker);
+                    }
                     break;
                 case 3:
                     running = false;

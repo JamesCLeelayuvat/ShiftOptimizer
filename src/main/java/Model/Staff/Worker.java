@@ -1,26 +1,34 @@
 package main.java.Model.Staff;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import main.java.Model.Schedules.WorkerSchedule;
 
-public abstract class Worker
+public class Worker
 {
-    String status;
-
-    String username;
+    @JsonProperty("username")
+    private String userName;
+    @JsonProperty("password")
+    private String passWord;
+    @JsonProperty("status")
+    private String status;
 
     //int workerID;
 
     //WorkerSchedule schedule;
 
-    String password;
 
     @Override
     public String toString() {
         return "Worker{" +
-                "username='" + username + '\'' +
-                ", password='" + password + '\'' +
+                "username='" + userName + '\'' +
+                ", password='" + passWord + '\'' +
                 ", status='" + status + '\'' +
                 '}';
+    }
+
+    public Worker()
+    {
+
     }
 
 
