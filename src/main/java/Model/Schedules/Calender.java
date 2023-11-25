@@ -1,4 +1,4 @@
-package main.java.Model.Schedules;
+/*package main.java.Model.Schedules;
 
 
 import Model.*;
@@ -11,3 +11,4 @@ public class Calender
     DaysOfTheWeek dayOne = DaysOfTheWeek.Monday;
 
 }
+*/
