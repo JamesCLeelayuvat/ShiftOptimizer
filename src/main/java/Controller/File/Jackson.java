@@ -11,6 +11,8 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import main.java.Controller.Security.BouncyCastle;
 import main.java.Model.Staff.Worker;
 
 
@@ -177,6 +179,16 @@ public class Jackson {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    //Temp Signin
+    public static boolean signIn(String username, String password) {
+        int index = getIndexFromUsername(username);
+        if (index != -1) {
+            String storedHash = getPasswordFromIndex(index);
+            return BouncyCastle.passwordMatches(password, storedHash);
+        }
+        return false;
     }
 
 }
