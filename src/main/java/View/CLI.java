@@ -1,6 +1,10 @@
 package main.java.View;
 import main.java.Controller.File.Jackson;
+import main.java.Controller.File.JacksonEditor;
+import main.java.Controller.File.JacksonGetter;
+import main.java.Controller.UserAuth.SignInAuth;
 import main.java.Model.Staff.Worker;
+import main.java.Model.Token;
 
 
 import java.util.List;
@@ -31,13 +35,13 @@ public class CLI {
                     String password = scanner.next();
                     System.out.print("Enter status (ST/AD): ");
                     String status = scanner.next();
-                    Jackson.addWorker(username, password, status);
+                    JacksonEditor.addWorker(username, password, status);
 
                     //Jackson.addWorker("test1", "pass1", "ST");
                     //BouncyCastle.loginTest("test1", "pass1");
                     break;
                 case 2:
-                    List<Worker> workers = Jackson.getAllWorkers();
+                    List<Worker> workers = JacksonGetter.getAllWorkers();
                     for (Worker worker : workers) {
                         System.out.println(worker);
                     }
@@ -49,7 +53,7 @@ public class CLI {
                     running = false;
                     break;
                 case 5:
-                    Jackson.clearJsonFile();
+                    JacksonEditor.clearJsonFile();
                     System.out.println("JSON file cleared.");
                     break;
                 default:
@@ -68,11 +72,12 @@ public class CLI {
         System.out.print("Enter password: ");
         String password = scanner.next();
 
-        boolean isAuthenticated = Jackson.signIn(username, password);
+        //This should not be here in the real program
+        Token loginToken = SignInAuth.signIn(username, password);
+        //The user gets a token
 
-        if (isAuthenticated) {
+        if (loginToken != null) {
             System.out.println("Sign in successful!");
-            // You can add more logic here for what happens after successful sign in
         } else {
             System.out.println("Sign in failed. Please check your credentials.");
         }
