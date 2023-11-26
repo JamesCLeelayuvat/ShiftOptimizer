@@ -1,30 +1,39 @@
+package main.java.Model.Time;
+
 import java.time.LocalTime;
 
 public class Hour {
-    private LocalTime time;
-    private boolean isAvailable;
+    // Each Hour contains two half-hour segments
+    private boolean[] halfHours = new boolean[2];
+    private LocalTime[] halfHourStartTimes = new LocalTime[2];
 
-    public Hour(LocalTime time) {
-        this.time = time;
-        this.isAvailable = true; // Default to available
+    public Hour(int hourOfDay) {
+        for (int i = 0; i < 2; i++) {
+            halfHours[i] = false;
+            halfHourStartTimes[i] = LocalTime.of(hourOfDay, i * 30);
+        }
     }
 
-    // Getters and setters
-    public LocalTime getTime() {
-        return time;
+    // Set the status of a half-hour segment
+    public void setHalfHour(int index, boolean status) {
+        if (index >= 0 && index < halfHours.length) {
+            halfHours[index] = status;
+        } else {
+            throw new IllegalArgumentException("Invalid half-hour index: " + index);
+        }
     }
 
-    public void setTime(LocalTime time) {
-        this.time = time;
+    // Get the status of a half-hour segment
+    public boolean getHalfHour(int index) {
+        if (index >= 0 && index < halfHours.length) {
+            return halfHours[index];
+        } else {
+            throw new IllegalArgumentException("Invalid half-hour index: " + index);
+        }
     }
 
-    public boolean isAvailable() {
-        return isAvailable;
-    }
-
-    public void setAvailable(boolean available) {
-        isAvailable = available;
-    }
+    // Additional methods as needed
 }
-    //Hour class contains array of two half hours that are a true or false boolean
+
+//Hour class contains array of two half hours that are a true or false boolean
     //boolean[] halfHour = new boolean[2];
