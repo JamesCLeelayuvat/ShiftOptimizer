@@ -13,20 +13,25 @@ import main.java.View.*;
 
 
 import java.time.LocalTime;
+import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args)
     {
 
         CLI cli = new CLI();
-        //cli.run();
+        cli.run();
 
         //BIG TEST TO SEE IF WORKERS HOLD THEIR SCHEDULES
 
         // Create a worker
-        JacksonEditor.addWorker("test1", "pass1", "ST");
+        //Tests if we hardcode a worker
+        //JacksonEditor.addWorker("test1", "pass1", "ST");
+
 
         Worker worker = JacksonGetter.getWorkerByUsername("test1");
+
+        //ArrayList<Worker> workers = (ArrayList<Worker>) JacksonGetter.getAllWorkers();
 
         if (worker == null) {
             System.out.println("Worker not found");
