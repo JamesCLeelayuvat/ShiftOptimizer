@@ -10,6 +10,7 @@ public class Hour {
         for (int i = 0; i < 2; i++) {
             halfHours[i] = false;
             halfHourStartTimes[i] = LocalTime.of(hourOfDay, i * 30);
+            //halfHours[i] = WorkdayConfig.isWithinWorkHours(halfHourStartTimes[i]);
         }
     }
 
