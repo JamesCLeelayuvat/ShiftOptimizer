@@ -4,14 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Week {
-    private List<Day> days;
+    public List<Day> days;
 
     public Week() {
-        this.days = new ArrayList<>();
-        initializeWeek();
-    }
-
-    private void initializeWeek() {
+        days = new ArrayList<>();
         String[] dayNames = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
         // Set the number of days in the week here
         int totalDays = 7; // Change this to 14 for a two-week schedule
@@ -28,7 +24,4 @@ public class Week {
             throw new IllegalArgumentException("Invalid day index: " + dayIndex);
         }
     }
-
-    // Additional methods as needed
 }
-
