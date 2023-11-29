@@ -43,4 +43,16 @@ public class JacksonGetter extends Jackson{
         }
         return new ArrayList<>();
     }
+
+    public static Worker getWorkerByUsername(String username) {
+        List<Worker> workers = getAllWorkers();
+        for (Worker worker : workers) {
+            if (worker.getUserName().equals(username)) {
+                return worker;
+            }
+        }
+        return null; // or throw an exception if the worker is not found
+    }
+
+
 }

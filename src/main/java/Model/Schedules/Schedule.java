@@ -14,13 +14,22 @@ public class Schedule {
         this.shifts = new ArrayList<>();
     }
 
-    public void addShift(Shift shift) {
-        // You might want to check for conflicts before adding
-        shifts.add(shift);
+    public boolean addShift(Shift shift) throws ShiftConflictException {
+        if (!hasConflict(shift)) {
+            shifts.add(shift);
+            shift.getDay().addShiftToDay(shift);// Also add the shift to the specific day
+            return true;
+        } else {
+            throw new ShiftConflictException("Shift conflict detected for " + shift);
+        }
     }
 
     public boolean removeShift(Shift shift) {
-        return shifts.remove(shift);
+        if (shifts.remove(shift)) {
+            shift.getDay().removeShiftFromDay(shift); // Update the day
+            return true;
+        }
+        return false;
     }
 
     public List<Shift> getShifts() {
@@ -30,16 +39,36 @@ public class Schedule {
     // Method to check for shift conflicts
     public boolean hasConflict(Shift newShift) {
         for (Shift existingShift : shifts) {
-            if (shiftsOverlap(existingShift, newShift)) {
+            if (isSameDay(existingShift, newShift) && shiftsOverlap(existingShift, newShift)) {
                 return true;
             }
         }
         return false;
     }
 
+    //HELPER METHODS
     private boolean shiftsOverlap(Shift shift1, Shift shift2) {
         return !shift1.getEndTime().isBefore(shift2.getStartTime()) &&
                 !shift2.getEndTime().isBefore(shift1.getStartTime());
+    }
+
+    private boolean isSameDay(Shift shift1, Shift shift2) {
+        return shift1.getDay().equals(shift2.getDay());
+    }
+
+
+
+
+    public String printSchedule() {
+        StringBuilder scheduleString = new StringBuilder();
+        for (Shift shift : shifts) {
+            scheduleString.append("Shift: ")
+                    .append(shift.getStartTime())
+                    .append(" to ")
+                    .append(shift.getEndTime())
+                    .append("\n");
+        }
+        return scheduleString.toString();
     }
 
     // Additional methods as needed
